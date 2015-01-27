@@ -1,0 +1,206 @@
+$defalt-row-width: 		1200;
+
+$default-colspan: 		1;
+$default-cols: 			4;
+$default-col-margin: 	20;
+
+$default-padding: 		0;
+$default-row-margin:	0 auto;
+
+
+// en-row
+// -------------------------------------------------------------------
+// this mixin will create the rows for the grid
+//
+// @param    map        $settings    object containing all the settings for the row
+//
+// @key      string     screen       media query identifier set in _vars.scss
+// @key      integer    width        max width of the row in pixels
+// @key      integer    margin       percentage of margin
+// @key      integer    padding      percentage of padding
+//
+// all keys have defaults that can be set in _vars.scss, if a key is
+// not included in the map the default will be used
+
+@mixin en-row( $settings: () ){
+
+	$defaults: (
+			screen:         false,
+			width:          $defalt-row-width,
+			padding:        $default-padding,
+			margin:         $default-row-margin
+	);
+
+	// merge the settings and default maps
+
+	$m: map-merge( $defaults, $settings );
+
+	// extract the variables from the settings
+
+	$_screen:           map-get( $m,     screen       );
+	$_width:            map-get( $m,     width        );
+	$_margin:           map-get( $m,     margin       );
+	$_padding:          map-get( $m,     padding      );
+
+
+	@if $_screen {
+
+		// get the size from the media-sizes map in _vars.scss
+
+		$screen-size:   map-get( $media-sizes, #{$_screen} );
+
+		@media screen and ( min-width: $screen-size ){
+
+			max-width: 		$_width * $rems;
+			width: 			100%;
+			margin: 		$_margin;
+			padding: 		$_padding;
+
+		}
+
+	}
+	@else {
+
+		max-width: 		$_width * $rems;
+		width: 			100%;
+		margin: 		$_margin;
+		padding: 		$_padding;
+
+	}
+
+	&:before,
+	&:after {
+		content: 		"";
+		display: 		table;
+	}
+	&:after {
+		clear: 			both;
+	}
+}
+
+
+
+// en-col
+// -------------------------------------------------------------------
+// this mixin will create the columns for the grid
+//
+// @param    map        $settings    object containing all the settings for the column
+//
+// @key      string     screen       media query identifier set in _vars.scss
+// @key      integer    span         ratio width of the column
+// @key      integer    cols         total amount of colums
+// @key      integer    margin       percentage of margin
+// @key      integer    padding      percentage of padding
+//
+// all keys have defaults that can be set in _vars.scss, if a key is
+// not included in the map the default will be used
+
+@mixin en-col( $settings: () ){
+
+	$defaults: (
+			span:        $default-colspan,
+			cols:        $default-cols,
+			padding:     $default-padding,
+			margin:      $default-col-margin,
+			screen:      false
+	);
+
+	// combine the default and settings maps
+
+	$m: map-merge( $defaults, $settings );
+
+	// extract the values and store them in local variables
+
+	$_screen:           map-get( $m,     screen       );
+	$_span:             map-get( $m,     span         );
+	$_cols:             map-get( $m,     cols         );
+	$_margin:           map-get( $m,     margin       );
+	$_padding:          map-get( $m,     padding      );
+
+
+	// here is where the magic happens
+
+	$_total-margin:          ($_cols - 1) * $_margin;
+	$_total-padding:         ($_cols - 1) * $_padding * ($_cols);
+	$_spanned-margins:       ($_span - 1) * $_margin;
+	$_minus-margin-padding:  (100 - $_total-margin - $_total-padding) / $_cols;
+
+	$_width: ( $_span * $_minus-margin-padding ) + $_spanned-margins + 0%;
+
+	// if its a media query
+
+	@if $_screen {
+
+		// get the size from the media-sizes map in _vars.scss
+
+		$screen-size: map-get( $media-sizes, #{$_screen} );
+
+		@media screen and ( min-width: $screen-size ){
+
+			width: $_width + 0%;
+
+			.msie & {
+				width: ($_width - .3) + 0% ;
+			}
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			padding:         $_padding + 0%;
+			float:           left;
+			margin-right:    $_margin + 0%;
+			margin-bottom:   $_margin + 0% ;
+
+		}
+
+	}
+
+		// its the not a media query
+
+	@else {
+
+		width: ($_width) + 0%;
+
+		.msie & {
+			width: ($_width - .3) + 0% ;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		padding: $_padding + 0%;
+		margin-right: $_margin + 0%;
+		margin-bottom: $_margin + 0% ;
+
+	}
+
+	float: left;
+}
+
+@function k( $elem ){
+	@return map-has-key( $elem );
+}
+
+@mixin en-col-list( $list ){
+    @each $i in $list {
+        @include en-col( $i );
+    }
+}
+
+@mixin col-3( $span: 1, $total: 3 ){
+	// this will calculate the percentage
+	$_width: $total / $span;
+
+	// 33.333333%
+	width: $_width + 0%;
+
+	// I want to copy the parent selector with .msie
+}
+
+// style.scss
+.col-1-3 {
+	@include col-3(1, 3);
+	background: adjust-hue( #55da84, -66.6% );
+}

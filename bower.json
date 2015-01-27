@@ -1,0 +1,29 @@
+{
+  "name": "cms",
+  "version": "0.0.0",
+  "description": "cms template",
+  "main": "main.js",
+  "keywords": [
+    "cms",
+    "template"
+  ],
+  "authors": [
+    "andrew fountain"
+  ],
+  "license": "MIT",
+  "homepage": "http://andrew-fountain.com/cms",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15"
+  },
+  "moduleType": [
+    "amd"
+  ]
+}

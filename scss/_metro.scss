@@ -1,0 +1,70 @@
+.metro-panel {
+	@extend .clear;
+	max-width: 800px;
+	width: 100%;
+	margin: auto;
+	// background: red;
+	perspective: 200px; //
+	// transform-origin: 50%;
+}
+
+.metro {
+	display: block;
+	float: left;
+	height: 200px;
+	position: relative;
+	transform-origin: 50%;
+
+	.back, .front {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+	}
+
+	.back {
+		background: red;
+	}
+
+	.front {
+		background: green;
+	}
+}
+
+#metro1{
+	@include en-col((
+		screen: 'hand',
+		cols: 3,
+		span: 2,
+		margin: 0
+	));
+
+	background: #aaa;
+	height: 400px;
+}
+
+#metro2,
+#metro3,{
+
+	@include en-col((
+		screen: 'hand',
+		cols: 3,
+		span: 1,
+		margin: 0
+	));
+}
+
+#metro4,
+#metro5 {
+	@include en-col((
+		screen: 'hand',
+		cols: 2,
+		span: 1,
+		margin: 0
+	));
+}
+
+#metro2 { background: lighten( #aaa, 5% ); }
+#metro3 { background: lighten( #aaa, 10% ); }
+#metro4 { background: lighten( #aaa, 15% ); }
+#metro5 { background: lighten( #aaa, 20% ); }

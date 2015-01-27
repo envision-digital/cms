@@ -1,0 +1,43 @@
+.tabs {
+	@extend .clear;
+}
+
+.tabs-nav {
+	@extend .clear;
+	display: block;
+	width: 100%;
+	background: $color-background-accent;
+	border-bottom: .3em solid #c3cccf;
+}
+
+.tab-nav {
+
+	float: left;
+	display: block;
+	a{
+		display: block;
+		padding: 1em 2em;
+
+		&:hover, &.active {
+			background: darken($color-background-accent, 5%);
+			box-shadow: 0 0 4px darken($color-background-accent, 15%) inset;
+		}
+	}
+}
+
+
+.tabs-container {
+	height: 100%;
+	width: 100%;
+	background: #eee;
+	padding: 2em;
+	position: relative;
+}
+
+.tab {
+
+	display: none;
+	position: relative;
+	top: 0px;
+
+}

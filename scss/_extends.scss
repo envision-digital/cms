@@ -1,0 +1,29 @@
+.hide {
+
+    @include en-media{
+        @recieve($size: 'hand', $type: 'min-width');
+        display: none;
+    }
+
+}
+
+.show {
+
+    $min: map-get( $media-sizes, 'middle' );
+    $max: map-get( $media-sizes, 'middle' );
+
+    @media screen and ( 'max-width': #{$min}){
+        display: inline-block;
+    }
+
+    @media screen and ('min-width': #{$max} ){
+        display: none;
+    }
+
+}
+
+.clear {
+
+    @include clearfix;
+
+}

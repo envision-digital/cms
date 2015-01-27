@@ -1,0 +1,18 @@
+@function border( $size: 0, $style: solid, $color: #222){
+
+    @return
+        (size: $size, style: $size $style $color);
+
+}
+
+@function ems( $val, $base-px: $base-px ){
+
+    @return $val * ( 1 / $base-px ) + 0em;
+
+}
+
+@function rems( $val, $base-px: $base-px ){
+
+    @return $val * ( 1 / $base-px ) + 0rem;
+
+}

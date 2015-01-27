@@ -1,0 +1,90 @@
+@mixin clearfix {
+
+    display: block;
+
+    &::before, &::after {
+
+        content: "";
+        display:block;
+        clear: both;
+
+    }
+}
+
+@mixin reset-list {
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+
+// margin
+// -----------------------------------------------------------------------
+// this function will produce a margin from the input values
+//
+@mixin margin( $top: null, $right: null, $bottom: null, $left: null ){
+
+    // test for debugging
+    //	@include debug( 'margin', ( top: $top, right: $right, bottom: $bottom, left: $left ));
+
+    // check if the user is unputting a string to the mixin
+    @if type-of( $top ) == 'string' {
+
+        @if $top == 'center' {
+            margin: 0 auto;
+        }
+        @else {
+            margin: $top;
+        }
+    }
+    // if only $top is set
+    @elseif $top and $right == null and $bottom == null and $left == null {
+
+        margin: $top * $ems;
+
+        // if $top and right are set
+    } @elseif $top and $right and $bottom == null and $left == null {
+
+        margin: ($top * $ems) ($right * $ems);
+
+        // this will probably never come up
+    } @elseif $top and $right and $bottom and $left == null {
+
+        margin: ($top * $ems) ($right * $ems) ($bottom * $ems) ($right * $ems);
+
+        // if all properties are set
+    } @elseif $top and $right and $bottom and $left {
+
+        margin: ($top * $ems) ($right * $ems) ($bottom * $ems) ($left * $ems);
+
+    }
+
+}
+
+
+@mixin font-family {
+
+    font-family:   "museo-sans","museo-sans",sans-serif;
+
+}
+
+// en-media
+//---------------------------------------------------------------------
+// this mixin will
+@mixin en-media( $size: 'middle', $type: 'max-width' ){
+    @debug 'type: ' + $type;
+    @media screen and ( #{$type}: map-get( $media-sizes, #{$size} ) ) {
+
+        @content;
+
+    }
+
+}
+
+@mixin en-active{
+    &:hover, &:focus, &:active, &.active {
+        @content;
+    }
+}

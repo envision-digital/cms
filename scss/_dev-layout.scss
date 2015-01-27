@@ -1,0 +1,153 @@
+body, html {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+
+aside.sidebar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 110px;
+	bottom: 0;
+	background: $color-background-dark-invert;
+	z-index: 1001;
+
+	.sidebar__links {
+		@extend .clear;
+	}
+
+	.sidebar__link {
+		width: $sidebar-width - 5px;
+		height: $sidebar-width;
+		background: $color-background-dark;
+		//border-left: 5px solid $color-background-dark;
+		width: 110px;
+		transition: 0.25s all;
+
+		&:hover, &:active, &:focus {
+			background: $color-background-dark-shade;
+			color: #eee;
+			border-left: 5px solid orange;
+		}
+
+		a {
+			font-size: 2em;
+			text-align: center;
+			vertical-align: middle;
+			height: 100%;
+			width: 100%;
+			line-height: 100px;
+
+			&:hover, &:active, &:focus {
+				color: #95989c;
+			}
+		}
+	}
+}
+
+.sidebar__menu {
+	position: fixed;
+	left: -185px;
+	top: 0;
+	bottom: 0;
+	width: 300px;
+	z-index: 1000;
+	background: lighten($color-primary, 10%);
+	border-right: 5px solid $color-primary;
+
+	body.sidebar__menu-active & {
+		left: $sidebar-width;
+	}
+}
+
+.hide-min {
+	display: none;
+}
+
+.content-wrapper {
+
+	body.sidebar__menu-active & {
+		left: $sidebar-width + $sidebar-menu-width;
+	}
+
+	position: absolute;
+	top: 0;
+	left: 105px;
+	right: 0;
+	bottom: 0;
+	padding: 2em;
+}
+
+header {
+	position: absolute;
+	top: 0;
+	left: 5px;
+	right: 0;
+	height: $header-height;
+	background: #444C54;//
+}
+
+h1 {
+	padding: 1em;
+	display: inline-block;
+	float: left;
+}
+
+input[type=text] {
+	background: #4e535d;
+	border: none;
+	padding: 1em;
+	margin: 2em;
+	width: 100px;
+	float: right;
+
+	&:active, &:focus {
+		outline: none;
+	}
+}
+
+main {
+
+	position: absolute;
+	top: $header-height;
+	left: 5px;
+	right: 0;
+	bottom: 0;
+	background: $color-background-shade;
+	padding: 2em;
+}
+
+.sidebar__menu-items {
+	@extend .clear;
+	position: relative;
+	padding-left: 2em;
+}
+
+.sidebar__menu-item {
+	position: relative;
+	left: 0;
+	display: block;
+	padding: 1em;
+	margin: .1em;
+	width: 80%;
+
+	a {
+		color: white;
+		font-weight: bold;
+	}
+}
+
+.sidebar__menu-header {
+	background: darken($color-primary, 5%);
+	height: 6em;
+
+	h2 {
+		padding: 1em;
+	}
+}

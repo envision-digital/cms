@@ -1,0 +1,52 @@
+
+// settings variables
+$default-base-px:       16;
+$base-px: 				14; // default font size
+$calc: 					( 1 / $base-px );
+$rems: 					$calc + 0rem;
+$ems: 					$calc + 0em;
+
+// media query sizes list
+$media-sizes: (
+    watch:                 240 * $rems,
+    hand:                  480 * $rems,
+    middle:                600 * $rems,
+    lap:                   1020 * $rems,
+    desk:                  1200 * $rems,
+    wall:                  2000 * $rems
+);
+
+// main highlight color of the site
+$color-primary:             #32A3CB;
+// main accent of the site
+$color-accent:              #E26E6C;
+// main background of the site
+$color-background-dark:     #31343B;
+
+$color-background-dark-shade: #272930;
+
+$color-background-dark-invert:   #3C4048;
+
+$color-background: #fff;
+$color-background-shade: #F5F6F9;
+$color-background-accent: #E4E5E9;
+
+$color-text: 	            #DADCE1;
+$color-text-weak:	        #777;
+$color-text-em:             #3D4151;
+$color-text-strong:         #1a1a1a;
+$color-text-heading:    	#1a1a1a;
+$color-text-invert:        	#fff;
+$color-text-invert-weak: #8a8a8a;
+$color-text-strong-invert:  #fff;
+$color-text-link:        	#333;
+$color-text-link-visited:	#fff;
+$color-text-link-hover:     darken($color-text-link, 10%);
+$color-text-link-alt:       #5d6f79;
+$color-text-link-alt-hover: #ffaa17;
+$color-border:            	#E4EAEC;
+$color-image-border:        #e1e6e9; // force again and ore
+
+$sidebar-width: 100px;
+$header-height: 6em;
+$sidebar-menu-width: 300px;

@@ -1,0 +1,71 @@
+$size: 2;
+
+img {
+    width: 100%;
+}
+
+h1 { font-size: ($size)+em; }
+h2 {
+    font-size: ($size * .9)+em;
+    font-weight: 300;
+    color: $color-primary;
+	padding: 0 0 ems(20) 0;
+}
+h3 {
+	font-size: ($size * .8)+em;
+	padding: ems(15) 0;
+}
+h4 {
+	font-size: ($size * .6)+em;
+	padding: ems(15) 0;
+}
+h5 { font-size: ($size * .625)+em; }
+
+p, li, em {
+    font-size: ems(14);
+    line-height: 1.4em;
+    font-weight: 100;
+	color: $color-text-weak;
+}
+
+p {
+    padding-bottom: 1em;
+}
+
+em {
+    font-weight: 500;
+    color: $color-text-em;
+}
+
+a, a:active, a:focus {
+    text-decoration: none;
+    color: $color-primary;
+}
+
+a:hover {
+
+    color: $color-text-link-hover;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+a.alt, a.alt:active, a.alt:focus {
+    color: $color-text-link-alt;
+}
+
+a.alt:hover {
+
+    color: $color-text-link-alt-hover;
+
+}
+
+ul, div {
+    margin: 0;
+    padding: 0;
+    li{
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+}

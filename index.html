@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CMS</title>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css"/>
+    <link rel="stylesheet" href="scss/main.css"/>
+    <script src="./bower_components/requirejs/require.js" data-main="./js/app.js"></script>
+</head>
+<body class="">
+    <aside class="sidebar">
+        <nav role="navigation">
+            <ul class="sidebar__links">
+                <li class="sidebar__link"><a href="#" class="fa fa-home"><span class="hide-min">Dashboard</span></a></li>
+                <li class="sidebar__link"><a href="#" class="fa fa-tasks"><span class="hide-min">projects</span></a></li>
+                <li class="sidebar__link"><a href="#" class="fa fa-list-ul"><span class="hide-min">Tickets</span></a></li>
+                <li class="sidebar__link"><a href="#" class="fa fa-group"><span class="hide-min">Clients</span></a></li>
+                <li class="sidebar__link"><a href="#" class="fa fa-question-circle"><span class="hide-min">Support</span></a></li>
+                <li class="sidebar__link"><a href="#" class="fa fa-cog"><span class="hide-min">Help</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+    <nav class="sidebar__menu" role="navigation">
+        <div class="sidebar__menu-header"><h2>Something</h2></div>
+        <ul class="sidebar__menu-items">
+            <li class="sidebar__menu-item"><a href="#one">Something</a></li>
+            <li class="sidebar__menu-item"><a href="#two">Something Else</a></li>
+            <li class="sidebar__menu-item"><a href="#three">Something Else</a></li>
+            <li class="sidebar__menu-item"><a href="#four">Something Else</a></li>
+            <li class="sidebar__menu-item"><a href="#five">Something Else</a></li>
+        </ul>
+    </nav>
+    <section class="content-wrapper">
+        <header>
+            <h1>Dashboard</h1>
+            <div class="form-input search">
+                <input  id="search" type="text" placeholder="Search..."/>
+            </div>
+        </header>
+        <main>
+            <h1>tabs</h1>
+            <div class="content">
+
+                <section id="tab-1" class="tabs">
+                    <ul class="tabs-nav" role="tablist">
+                        <li class="tab-nav" data-tab="news" role="presentation">
+                            <a id="tab-link-news" href="#tab-news" role="tab">News</a>
+                        </li>
+                        <li class="tab-nav" data-tab="blog" role="presentation">
+                            <a id="tab-link-blog" href="#tab-blog" role="tab">Blog</a>
+                        </li>
+                        <li class="tab-nav" data-tab="test" role="presentation">
+                            <a id="tab-link-test" href="#tab-test" role="tab">Test</a>
+                        </li>
+                    </ul>
+                    <div class="tabs-container">
+                        <div class="tab active" id="tab-news" aria-labelledby="tab-link-news" role="tabpanel">
+                            <h2>tab 1</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consectetur consequatur earum error est eum excepturi, facere fuga in ipsa laboriosam numquam quae quidem quis ratione reprehenderit suscipit, veniam, voluptatem.</p>
+                        </div>
+                        <div class="tab" id="tab-blog" aria-labelledby="tab-link-blog" role="tabpanel">
+                            <h2>tab two</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consectetur consequatur earum error est eum excepturi, facere fuga in ipsa laboriosam numquam quae quidem quis ratione reprehenderit suscipit, veniam, voluptatem.</p>
+                        </div>
+
+                        <div class="tab" id="tab-test" aria-labelledby="tab-link-test" role="tabpanel">
+                            <h2>tab test</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consectetur consequatur earum error est eum excepturi, facere fuga in ipsa laboriosam numquam quae quidem quis ratione reprehenderit suscipit, veniam, voluptatem.</p>
+                        </div>
+                    </div>
+                </section>
+
+
+                <table class="data-table" id="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>job</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>andrew</td>
+                            <td>Front End Developer</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>nicholas</td>
+                            <td>networking</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Tim</td>
+                            <td>PHP Developer</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Helen</td>
+                            <td>Support</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Tia</td>
+                            <td>Client Services</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <section class="metro-panel">
+                    <div class="metro" id="metro1">
+                        <div class="front">front</div>
+                        <div class="back">back</div>
+                    </div>
+                    <div class="metro" id="metro2">
+                        <div class="front">front</div>
+                        <div class="back">back</div>
+                    </div>
+                    <div class="metro" id="metro3">
+                        <div class="front">front</div>
+                        <div class="back">back</div>
+                    </div>
+                    <div class="metro" id="metro4">
+                        <div class="front">front</div>
+                        <div class="back">back</div>
+                    </div>
+                    <div class="metro" id="metro5">
+                        <div class="front">front</div>
+                        <div class="back">back</div>
+                    </div>
+                </section>
+
+
+
+
+            </div> <!-- end content -->
+            <footer class="panel-footer">
+
+            </footer>
+        </main>
+    </section>
+    <script>
+        require([
+            'app'
+        ], function( main ){
+
+            require([
+                'jquery',
+                "TweenLite", 
+                "TimelineLite", 
+                "CSSPlugin", 
+                "EasePack",
+                "js/app/tabs",
+                "js/app/metro",
+                "js/app/sidebar",
+                'table'
+            ], function( $, TweenLite, TimelineLite, CSSPlugin, EasePack, tabs, metro, sidebar, table ){
+
+                $(function(){
+
+                    tabs.init();
+                    metro.init();
+                    sidebar.init();
+
+                    var jTable = $('#jobs-table').smartTable();
+                    console.log( jTable );
+
+
+                    $('#search').focusin(function( e ){
+                        TweenLite.to( this, 1, {
+                            width: '250px'
+                        })
+                    });
+
+                    $('#search').focusout(function( e ){
+                        TweenLite.to( this, 1, {
+                            width: '100px'
+                        })
+                    });
+
+
+                });
+
+            });
+
+        });
+
+
+    </script>
+</body>
+</html>

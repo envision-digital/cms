@@ -1,0 +1,21 @@
+table.data-table {
+
+	font-size: 1em;
+
+	th {
+		font-weight: 700;
+		background: $color-background-accent;
+	}
+
+	td, th {
+		padding: 1em 2em; //
+	}
+
+	tr:nth-child( even ){
+		background: darken( $color-background, 7% ); //
+	}
+
+	tr:hover {
+		background: $color-primary;
+	}
+}
