@@ -32,13 +32,12 @@
 
 	Table.prototype = {
 
-		// length to make it act like an array
 		/**
 		 * Table.push
 		 *
 		 * this function will add new data to the Table objech
 		 * 
-		 * @return this 	for method chaining
+		 * @return Table 	for method chaining
 		 */
 		push: function(){
 
@@ -64,7 +63,7 @@
 		 * Table.pop
 		 *
 		 * this function will remove data from the end of the table
-		 * @return {[type]} [description]
+		 * @return Table [description]
 		 */
 		pop: function(){
 			this.data.pop();
@@ -74,11 +73,6 @@
 			return this;
 		},
 
-		// make the table object act like an array
-		// splice: function(){
-		// 	return Array.prototype.splice.apply(this, arguments);
-		// },
-
 		/**
 		 * Table._render
 		 *
@@ -86,19 +80,29 @@
 		 * 
 		 * @return @this 	for method chaining
 		 */
-		_render: function(){
-			var fragment = document.createDocumentFragment();
+		_render: function( data ){
 
-			for( var ii = 0, ll = this.data.length; ii < ll; ii++){
+			var
+				data     = data || this.data,
+				fragment = document.createDocumentFragment();
+
+			for( var ii = 0, ll = data.length; ii < ll; ii++){
 				var tr = document.createElement('tr');
-				for( var key in this.data[ii] ){
+				for( var key in data[ii] ){
 					var td = document.createElement('td');
-					td.appendChild( document.createTextNode( this.data[ii][key] ));
+					td.appendChild( document.createTextNode( data[ii][key] ));
 					tr.appendChild( td );
+					tr.dataset['index'] = ii;
 				}
 				fragment.appendChild( tr );
 			}
 			this.$body.html( fragment );
+		},
+
+		filter: function(){
+
+
+
 		},
 
 		/**
@@ -108,18 +112,20 @@
 		 * 
 		 * @param  	array	arr 	object array to sort
 		 * @param 	string  cal 	property to sort the array by	
-		 * @return 	$this     		for method chaining
+		 * @return 	Table     		for method chaining
 		 */
 		sort: function( col, order ){
-			console.dir( this.data );
+
 			this.data = this.data.sort(function( a, b ){
-				var aCol = a[col].toLowerCase(),
-					bCol = b[col].toLowerCase(),
-					isNum = aCol.match(/^[0-9]+$/);
+
+				var
+					aCol    = a[col].toLowerCase(),
+					bCol    = b[col].toLowerCase(),
+					isNum   = aCol.match(/^[0-9]+$/);
 
 				if( isNum ){
-					aCol = parseInt( aCol );
-					bCol = parseInt( bCol );
+					aCol    = parseInt( aCol );
+					bCol    = parseInt( bCol );
 				}
 				if( order === 'asc' ){
 					return aCol === bCol ? 0 : aCol > bCol ? 1 : -1;
@@ -127,11 +133,13 @@
 				return aCol === bCol ? 0 : aCol < bCol ? 1 : -1;
 
 			});
-			console.log( this.data );
+
 			this._render();
+
+			return this;
 		},
 
-		ajaxGet: function( url, callback ){
+		ajaxGet: function( url ){
 			var _this = this;
 			$.Ajax({
 				url: url,
@@ -147,12 +155,13 @@
 	$.fn.smartTable = function( config ){
 		// create a new smart table for each instance
 		$(this).each(function( ii ){
+
 			// create a new object to store the data and add it
 			// to the tables array
+			var
+				table   = tables[ this.id ] = new Table(),
+				$this   = $( this );
 
-			var table = tables[ this.id ] = new Table(),
-				$this = $( this );
-			debugger;
 			// assign the values to the table object
 			table.$el 		= $this;
 			table.$body 	= $this.find('tbody');
@@ -163,9 +172,35 @@
 			table.page      = 0;
 			table.pages     = table.data.length % 10;
 
+			// add contenteditable to table
+			$this.on('dblclick', 'td', function( e ){
+
+				var
+					$target  = $(this),
+					key      = table.headers[$target.index()];
+
+				$target.attr('contenteditable', true);
+				$target.on('blur', function( e ){
+
+					var
+						$el     = $(this),
+						index   = parseInt($el.parent().attr('data-index')) || $el.parent().index();
+
+					$el.removeAttr('contenteditable');
+
+					table.data[ index ][ key ] = stripTags( $el.html() );
+				});
+			});
+
 			return this;
 
 		});
+	}
+
+	function stripTags( input ){
+		return input.replace(/(<[^>]+>)/gm, '')
+				.replace(/&\w+;/gm, ' ')
+				.replace(/(\w+)$/gm, '$1 ');
 	}
 
 	/**
@@ -174,12 +209,11 @@
 	 * this function will get the text from the header column
 	 * 
 	 * @param  jQuery 	$table 	table parent to get the headers from
-	 * @return $this        	for method chaining
+	 * @return Array        	array of header names
 	 */
 	function _getHeaders( table ){
 		
-		var 
-			id 			= table.name,
+		var
 			_headers 	= [];
 
 		table.$el.find('th').each(function(ii){
@@ -187,7 +221,7 @@
 			_headers.push( this.innerHTML );
 
 			$(this).on('click', function( e ){
-				headerEventHandler.call( this, e, table);
+				headerEventHandler.call( this, e, table );
 			});
 		});
 
@@ -195,18 +229,20 @@
 	}
 
 	function headerEventHandler( e, table ){
-		debugger;
-		console.log( 'clicked:', this.innerHTML );
-		table.sortedBy = this.innerHTML;
-		table.order = table.order === 'asc' ? 'desc' : 'asc';
 
-		// add the data-sort attr to the sorted col, and remove from others
-		var headers = table.$el.find('th'),
-			notSorted = headers.not( this );
+		table.sortedBy  = this.innerHTML;
+		table.order     = table.order === 'asc' ? 'desc' : 'asc';
 
+		var
+			headers     = table.$el.find('th'),
+			notSorted   = headers.not( this );
+
+		// add the data-sort attr to the sorted
+		// col, and remove from others
 		notSorted.removeAttr('data-sorted');
 		$(this).attr( 'data-sorted', table.order );
 
+		// resort the table
 		table.sort( this.innerHTML, table.order );
 	}
 
@@ -215,12 +251,11 @@
 	 *
 	 * this function will get the data from a table
 	 * 
-	 * @return array 	table data
+	 * @return Array 	table data
 	 */
 	function _getData( table ){
 		
-		var 
-			id 		= table.id,
+		var
 			rows 	= table.$el.find('tbody tr'),
 			data 	= [];
 
@@ -229,7 +264,7 @@
 			var row = {};
 			$(this).find('td').each(function( xx ){
 				// add the key to the value
-				row[ table.headers[xx] ] = $(this).html();
+				row[ table.headers[ xx ] ] = $(this).html();
 			});
 			// add the column to the data
 			data.push( row );

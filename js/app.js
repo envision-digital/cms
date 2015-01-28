@@ -1,5 +1,5 @@
 requirejs.config({
-	"baseUrl": "/cms/",
+	"baseUrl": "",
 	"paths": {
 		"app": 		"./app",
 		"jquery": 		"./bower_components/jquery/dist/jquery",
@@ -14,5 +14,5 @@ requirejs.config({
 	shim: {
 	    'table': [ 'jquery' ]
 	},
-	"params": "v=" + new Date().getTime()
+	"urlArgs": "v=" + new Date().getTime()
 });

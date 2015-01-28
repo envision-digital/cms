@@ -6,6 +6,7 @@ table.data-table {
 		font-weight: 700;
 		background: $color-background-accent;
 		position: relative;
+		cursor: pointer;
 
 		&[data-sorted]:after {
 			display: inline-block;
@@ -16,7 +17,7 @@ table.data-table {
 			-moz-osx-font-smoothing: grayscale;
 			position: absolute;
 			top: 1em;
-			right: 0.5em;
+			right: 0.5em; // force
 
 		}
 
@@ -34,14 +35,14 @@ table.data-table {
 	}
 
 	td, th {
-		padding: 1em 2em; //
+		padding: 1em 2em;
 	}
 
 	tr:nth-child( even ){
-		background: darken( $color-background, 7% ); //
+		background: darken( $color-background, 7% ); // forces
 	}
 
 	tr:hover {
-		background: $color-primary;
+		background: lighten($color-primary, 40%);
 	}
 }
