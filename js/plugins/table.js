@@ -129,6 +129,17 @@
 			});
 			console.log( this.data );
 			this._render();
+		},
+
+		ajaxGet: function( url, callback ){
+			var _this = this;
+			$.Ajax({
+				url: url,
+				complete: function( response ){
+					_this.data = response.data;
+					_this._render();
+				}
+			});
 		}
 	}
 
@@ -188,6 +199,14 @@
 		console.log( 'clicked:', this.innerHTML );
 		table.sortedBy = this.innerHTML;
 		table.order = table.order === 'asc' ? 'desc' : 'asc';
+
+		// add the data-sort attr to the sorted col, and remove from others
+		var headers = table.$el.find('th'),
+			notSorted = headers.not( this );
+
+		notSorted.removeAttr('data-sorted');
+		$(this).attr( 'data-sorted', table.order );
+
 		table.sort( this.innerHTML, table.order );
 	}
 

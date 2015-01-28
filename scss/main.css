@@ -371,7 +371,22 @@ table.data-table {
   font-size: 1em; }
   table.data-table th {
     font-weight: 700;
-    background: #E4E5E9; }
+    background: #E4E5E9;
+    position: relative; }
+    table.data-table th[data-sorted]:after {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: absolute;
+      top: 1em;
+      right: 0.5em; }
+    table.data-table th[data-sorted]:after {
+      content: "\f0d7"; }
+    table.data-table th[data-sorted='desc']:after {
+      content: "\f0d8"; }
   table.data-table td, table.data-table th {
     padding: 1em 2em; }
   table.data-table tr:nth-child(even) {

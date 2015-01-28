@@ -1,5 +1,5 @@
 requirejs.config({
-	"baseUrl": "",
+	"baseUrl": "/cms/",
 	"paths": {
 		"app": 		"./app",
 		"jquery": 		"./bower_components/jquery/dist/jquery",

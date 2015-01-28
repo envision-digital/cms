@@ -5,6 +5,32 @@ table.data-table {
 	th {
 		font-weight: 700;
 		background: $color-background-accent;
+		position: relative;
+
+		&[data-sorted]:after {
+			display: inline-block;
+			font: normal normal normal 14px/1 FontAwesome;
+			font-size: inherit;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			position: absolute;
+			top: 1em;
+			right: 0.5em;
+
+		}
+
+		&[data-sorted] {
+			&:after {
+				content: "\f0d7";
+			}
+		}
+
+		&[data-sorted='desc'] {
+			&:after {
+				content: "\f0d8";
+			}
+		}
 	}
 
 	td, th {
