@@ -369,6 +369,10 @@ main {
 
 table.data-table {
   font-size: 1em; }
+  table.data-table caption {
+    font-size: 1.2em;
+    background: #5ab6d6;
+    padding: 1em; }
   table.data-table th {
     font-weight: 700;
     background: #E4E5E9;
@@ -394,5 +398,9 @@ table.data-table {
     background: #ededed; }
   table.data-table tr:hover {
     background: #d4ecf5; }
+  table.data-table td:focus {
+    background: #d4ecf5;
+    box-shadow: 0 0 7px #555 inset;
+    outline: none; }
 
 /*# sourceMappingURL=main.css.map */

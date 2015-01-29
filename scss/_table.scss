@@ -2,6 +2,12 @@ table.data-table {
 
 	font-size: 1em;
 
+	caption {
+		font-size: 1.2em;
+		background: lighten( $color-primary, 10% );
+		padding: 1em;
+	}
+
 	th {
 		font-weight: 700;
 		background: $color-background-accent;
@@ -44,5 +50,11 @@ table.data-table {
 
 	tr:hover {
 		background: lighten($color-primary, 40%);
+	}
+
+	td:focus {
+		background: lighten($color-primary, 40%);
+		box-shadow: 0 0 7px #555 inset;
+		outline: none;
 	}
 }
