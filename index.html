@@ -115,6 +115,8 @@
                     </tbody>
                 </table>
 
+                <table class='data-table' id="ajaxed-data" data-url="/cms/php/ajax.php"></table>
+
                 <section class="metro-panel">
                     <div class="metro" id="metro1">
                         <div class="front">front</div>
@@ -170,7 +172,7 @@
                     metro.init();
                     sidebar.init();
 
-                    var jTable = $('#jobs-table').smartTable();
+                    var jTable = $('#jobs-table, #ajaxed-data').smartTable();
                     console.log( jTable );
 
 

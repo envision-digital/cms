@@ -139,13 +139,20 @@
 			return this;
 		},
 
-		ajaxGet: function( url ){
+		ajaxGet: function( url, $el ){
 			var _this = this;
-			$.Ajax({
+			$.ajax({
+				method: 'get',
 				url: url,
+				async: false,
 				complete: function( response ){
-					_this.data = response.data;
-					_this._render();
+					var data = JSON.parse( response.responseText );
+					console.log( data );
+					_this.data = data.data;
+					_this.headers = data.headings
+					debugger;
+					_buildTable( _this, $el );
+					// _this._render();
 				}
 			});
 		}
@@ -161,6 +168,12 @@
 			var
 				table   = tables[ this.id ] = new Table(),
 				$this   = $( this );
+
+			// check if the data-url attr is set, if so get the data
+			if( $this.attr('data-url') ){
+				table.url = $this.attr('data-url');
+				table.ajaxGet( table.url, $this );
+			}
 
 			// assign the values to the table object
 			table.$el 		= $this;
@@ -192,15 +205,156 @@
 				});
 			});
 
+			$this.on('keydown', 'td', function( e ){
+				switch( e.keyCode ){
+					case 39:
+						moveRight.call( this, table );
+						break;
+					case 37:
+						moveLeft.call( this, table );
+						break;
+					case 38:
+						moveUp.call(this, table);
+						break;
+					case 40:
+						moveDown.call( this, table );
+						break;
+				}
+				console.log( e.keyCode, e );
+			});
+
 			return this;
 
 		});
+	}
+
+	function moveRight( table ){
+
+		var 
+			$this = $(this),
+			$next = $this.next();
+
+		if( $this.index() === $this.parent().children().length -1 ){
+			$next = $this.parent().children().first();
+		}
+
+		$this.removeAttr('contenteditable');
+		$next.attr('contenteditable', true);
+		$next.focus();
+	}
+
+	function moveLeft( table ){
+
+		var 
+			$this = $(this),
+			$previous = $this.prev();
+
+		if( $this.index() === 0 ){
+			$previous = $this.parent().children().last();
+		}
+
+		$this.removeAttr('contenteditable');
+		$previous.attr('contenteditable', true);
+		$previous.focus();
+	}
+
+	function moveDown( table ){
+
+		var 
+			$this 		= $(this),
+			index 		= $this.index(),
+			parent 		= $this.parent(),
+			nextParent 	= parent.next(),
+			below 		= null;
+
+		if( parent.index() === table.$body.children().length - 1 ){
+			debugger;
+			nextParent = table.$body.find('tr').first();
+		}	
+
+		below = $(nextParent).children().eq( index );
+
+		$this.removeAttr('contenteditable');
+		below.attr('contenteditable', true);
+		below.focus();
+	}
+
+	function moveUp( table ){
+
+		var 
+			$this 		= $(this),
+			index 		= $this.index(),
+			parent 		= $this.parent(),
+			prevParent 	= parent.prev(),
+			above 		= null;
+
+		if( parent.index() === 0 ){
+			debugger;
+			prevParent = table.$body.find('tr').last();
+		}
+
+		above = $(prevParent).children().eq( index );
+
+		$this.removeAttr('contenteditable');
+		above.attr('contenteditable', true);
+		above.focus();
 	}
 
 	function stripTags( input ){
 		return input.replace(/(<[^>]+>)/gm, '')
 				.replace(/&\w+;/gm, ' ')
 				.replace(/(\w+)$/gm, '$1 ');
+	}
+
+	/**
+	 * @private _buildTable
+	 *
+	 * this function will build a new tables html after
+	 * an ajax call to retrieve the data
+	 */
+	function _buildTable( table, $el ){
+
+		var 
+			fragment 	= document.createDocumentFragment(),
+			thead 		= document.createElement('thead'),
+			tbody 		= document.createElement('tbody');
+
+		// add the thead and tbody to the fragment
+		fragment.appendChild( thead );
+		fragment.appendChild( tbody );
+
+		// build the headers
+		for( var ii = 0; ii < table.headers.length; ii++ ){
+			
+			var 
+				th 		= document.createElement('th'),
+				text 	= document.createTextNode( table.headers[ii] );
+
+			th.appendChild(text);
+			thead.appendChild( th );
+		}
+
+		for( var ii = 0, ll = table.data.length; ii < ll; ii++ ){
+			
+			var tr = document.createElement('tr');
+				tr.setAttribute('data-index', ii);
+
+			for(var xx = 0; xx < table.headers.length; xx++ ){
+				
+				var 
+					td 		= document.createElement('td'),
+					// create data in order of the headers
+					text 	= document.createTextNode( table.data[ii][table.headers[xx]]);
+
+				td.appendChild( text );
+				tr.appendChild( td );
+			}
+
+			tbody.appendChild( tr );
+		}
+
+		$el.append( fragment );
+
 	}
 
 	/**
