@@ -139,8 +139,12 @@
 			return this;
 		},
 
-		ajaxGet: function( url, $el ){
-			var _this = this;
+		ajaxGet: function( url, $el, callback ){
+			var _this = this,
+				pathname = window.location.pathname;
+			if( pathname ){
+				url = pathname + url;
+			}
 			$.ajax({
 				method: 'get',
 				url: url,
@@ -152,6 +156,7 @@
 					_this.headers = data.headings
 					debugger;
 					_buildTable( _this, $el );
+					callback.call( _this, response );
 					// _this._render();
 				}
 			});
@@ -171,74 +176,93 @@
 
 			// check if the data-url attr is set, if so get the data
 			if( $this.attr('data-url') ){
+
 				table.url = $this.attr('data-url');
-				table.ajaxGet( table.url, $this );
+				table.ajaxGet( table.url, $this, function( response ){
+					initTable.call( this, table, $this, ii );
+				});
+
+			} else {
+
+				initTable.call( this, table, $this, ii );
+
 			}
 
-			// assign the values to the table object
-			table.$el 		= $this;
-			table.$body 	= $this.find('tbody');
-			table.uid 		= ii;
-			table.name 		= this.id;
-			table.headers   = _getHeaders( table );
-			table.data      = _getData( table );
-			table.page      = 0;
-			table.pages     = table.data.length % 10;
-
-			// add contenteditable to table
-			$this.on('dblclick', 'td', function( e ){
-
-				var
-					$target  = $(this),
-					key      = table.headers[$target.index()];
-
-				$target.attr('contenteditable', true);
-				$target.on('blur', function( e ){
-
-					var
-						$el     = $(this),
-						index   = parseInt($el.parent().attr('data-index')) || $el.parent().index();
-
-					$el.removeAttr('contenteditable');
-
-					table.data[ index ][ key ] = stripTags( $el.html() );
-				});
-			});
-
-			$(window).on('keypress', function( e ){
-				console.log( e );
-			});
-
-			$this.on('keydown', 'td', function( e ){
-
-				var
-					right   = 39,
-					left    = 37,
-					up      = 38,
-					down    = 40,
-					shift   = 16;
-
-
-				switch (e.keyCode) {
-					case 39:
-						moveRight.call(this, table);
-						break;
-					case 37:
-						moveLeft.call(this, table);
-						break;
-					case 38:
-						moveUp.call(this, table);
-						break;
-					case 40:
-						moveDown.call(this, table);
-						break;
-				}
-
-				// console.log( e.keyCode, e );
-			});
+			
 
 			return this;
 
+		});
+	}
+
+
+	function initTable( table, $this, ii ){
+
+		// assign the values to the table object
+		table.$el 		= $this;
+		table.$body 	= $this.find('tbody');
+		table.uid 		= ii;
+		table.name 		= this.id;
+		table.headers   = _getHeaders( table );
+		table.data      = _getData( table );
+		table.page      = 0;
+		table.pages     = table.data.length % 10;
+
+		// add contenteditable to table
+		$this.on('dblclick', 'td', function( e ){
+			dblclickHandler.call( this, e, table );
+		});
+
+		// move the conetntedibale focus around the table
+		$this.on('keydown', 'td', function( e ){
+			keydownHandler.call( this, e, table );
+		});
+	}
+
+	function keydownHandler( e, table ){
+		
+		var
+			right   = 39,
+			left    = 37,
+			up      = 38,
+			down    = 40,
+			shift   = 16;
+
+
+		switch (e.keyCode) {
+			case 39:
+				moveRight.call(this, table);
+				break;
+			case 37:
+				moveLeft.call(this, table);
+				break;
+			case 38:
+				moveUp.call(this, table);
+				break;
+			case 40:
+				moveDown.call(this, table);
+				break;
+		}
+			
+	}
+
+	function dblclickHandler( e, table ){
+		
+		var 
+			$target  = $(this),
+			key      = table.headers[$target.index()];
+
+		$target.attr('contenteditable', true);
+		// onblur: remove content edibable event
+		$target.on('blur', function( e ){
+
+			var
+				$el     = $(this),
+				index   = parseInt($el.parent().attr('data-index')) || $el.parent().index();
+
+			$el.removeAttr('contenteditable');
+
+			table.data[ index ][ key ] = stripTags( $el.html() );
 		});
 	}
 

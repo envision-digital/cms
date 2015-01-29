@@ -52,7 +52,7 @@ table.data-table {
 		background: lighten($color-primary, 40%);
 	}
 
-	td:focus {
+	td:focus, td[contenteditable=true] {
 		background: lighten($color-primary, 40%);
 		box-shadow: 0 0 7px #555 inset;
 		outline: none;
