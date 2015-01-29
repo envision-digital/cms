@@ -205,22 +205,36 @@
 				});
 			});
 
+			$(window).on('keypress', function( e ){
+				console.log( e );
+			});
+
 			$this.on('keydown', 'td', function( e ){
-				switch( e.keyCode ){
+
+				var
+					right   = 39,
+					left    = 37,
+					up      = 38,
+					down    = 40,
+					shift   = 16;
+
+
+				switch (e.keyCode) {
 					case 39:
-						moveRight.call( this, table );
+						moveRight.call(this, table);
 						break;
 					case 37:
-						moveLeft.call( this, table );
+						moveLeft.call(this, table);
 						break;
 					case 38:
 						moveUp.call(this, table);
 						break;
 					case 40:
-						moveDown.call( this, table );
+						moveDown.call(this, table);
 						break;
 				}
-				console.log( e.keyCode, e );
+
+				// console.log( e.keyCode, e );
 			});
 
 			return this;
