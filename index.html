@@ -118,25 +118,27 @@
                 <table class='data-table' id="ajaxed-data" data-url="/php/ajax.php"></table>
 
                 <section class="metro-panel">
-                    <div class="metro" id="metro1">
-                        <div class="front">front</div>
-                        <div class="back">back</div>
-                    </div>
-                    <div class="metro" id="metro2">
-                        <div class="front">front</div>
-                        <div class="back">back</div>
-                    </div>
-                    <div class="metro" id="metro3">
-                        <div class="front">front</div>
-                        <div class="back">back</div>
-                    </div>
-                    <div class="metro" id="metro4">
-                        <div class="front">front</div>
-                        <div class="back">back</div>
-                    </div>
-                    <div class="metro" id="metro5">
-                        <div class="front">front</div>
-                        <div class="back">back</div>
+                    <div class="metro-wrapper">
+                        <div class="metro" id="metro1">
+                            <div class="front">front</div>
+                            <div class="back">back</div>
+                        </div>
+                        <div class="metro" id="metro2">
+                            <div class="front">front</div>
+                            <div class="back">back</div>
+                        </div>
+                        <div class="metro" id="metro3">
+                            <div class="front">front</div>
+                            <div class="back">back</div>
+                        </div>
+                        <div class="metro" id="metro4">
+                            <div class="front">front</div>
+                            <div class="back">back</div>
+                        </div>
+                        <div class="metro" id="metro5">
+                            <div class="front">front</div>
+                            <div class="back">back</div>
+                        </div>
                     </div>
                 </section>
 
@@ -163,14 +165,16 @@
                 "js/app/tabs",
                 "js/app/metro",
                 "js/app/sidebar",
-                'table'
-            ], function( $, TweenLite, TimelineLite, CSSPlugin, EasePack, tabs, metro, sidebar, table ){
+                'table',
+                'js/plugins/metro'
+            ], function( $, TweenLite, TimelineLite, CSSPlugin, EasePack, tabs, metro, sidebar, table, metroPlug ){
 
                 $(function(){
 
                     tabs.init();
-                    metro.init();
+                    // metro.init();
                     sidebar.init();
+                    metroPlug.init();
 
                     var jTable = $('#jobs-table, #ajaxed-data').smartTable();
                     console.log( jTable );

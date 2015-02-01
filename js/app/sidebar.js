@@ -3,7 +3,12 @@ define([
 	'TimelineLite'
 ], function( $, TimelineLite ){
 
-	var sidebar, menu, sidebarLinks, sidebarItems, contentWrapper, menuout;
+	var sidebar,
+		menu,
+		sidebarLinks,
+		sidebarItems,
+		contentWrapper,
+		menuout;
 
 	function init(){
 
@@ -37,8 +42,11 @@ define([
 
 		if( !menuout ){
 			console.log( 'menuover' );
-			var tl = new TimelineLite();
-			var tl2 = new TimelineLite();
+
+			var
+				tl      = new TimelineLite(),
+				tl2     = new TimelineLite();
+
 			tl.add('menuIn')
 				.to( menu, 0.5, {
 					left: "110px"

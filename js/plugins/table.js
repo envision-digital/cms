@@ -16,7 +16,7 @@
 		}
 	}*/
 
-	// Table object contstructor
+	// Table object constructor
 	function Table(){
 		this.length     = 0;
 		this.$el        = null;
@@ -35,7 +35,7 @@
 		/**
 		 * Table.push
 		 *
-		 * this function will add new data to the Table objech
+		 * this function will add new data to the Table object
 		 * 
 		 * @return Table 	for method chaining
 		 */
@@ -142,7 +142,7 @@
 		ajaxGet: function( url, $el, callback ){
 			var _this = this,
 				pathname = window.location.pathname;
-			if( pathname ){
+			if( pathname !== '/' ){
 				url = pathname + url;
 			}
 			$.ajax({
@@ -154,7 +154,7 @@
 					console.log( data );
 					_this.data = data.data;
 					_this.headers = data.headings
-					debugger;
+					_this.title = data.title || url;
 					_buildTable( _this, $el );
 					callback.call( _this, response );
 					// _this._render();
@@ -188,11 +188,9 @@
 
 			}
 
-			
-
-			return this;
-
 		});
+
+		return this;
 	}
 
 
@@ -207,10 +205,16 @@
 		table.data      = _getData( table );
 		table.page      = 0;
 		table.pages     = table.data.length % 10;
+		table.selected  = null;
 
 		// add contenteditable to table
 		$this.on('dblclick', 'td', function( e ){
 			dblclickHandler.call( this, e, table );
+		});
+
+		$this.on('focusout', function(){
+			console.log( 'focusout event' );
+			table.selected.removeAttr('contentedibable');
 		});
 
 		// move the conetntedibale focus around the table
@@ -251,6 +255,8 @@
 		var 
 			$target  = $(this),
 			key      = table.headers[$target.index()];
+
+		table.selected = $target;
 
 		$target.attr('contenteditable', true);
 		// onblur: remove content edibable event
@@ -306,7 +312,6 @@
 			below 		= null;
 
 		if( parent.index() === table.$body.children().length - 1 ){
-			debugger;
 			nextParent = table.$body.find('tr').first();
 		}	
 
@@ -327,7 +332,6 @@
 			above 		= null;
 
 		if( parent.index() === 0 ){
-			debugger;
 			prevParent = table.$body.find('tr').last();
 		}
 
@@ -357,6 +361,11 @@
 			thead 		= document.createElement('thead'),
 			tbody 		= document.createElement('tbody');
 
+		// attach heading
+		var title = document.createElement('caption');
+		title.appendChild(document.createTextNode( table.title ));
+		fragment.appendChild( title );
+
 		// add the thead and tbody to the fragment
 		fragment.appendChild( thead );
 		fragment.appendChild( tbody );
@@ -374,7 +383,8 @@
 
 		for( var ii = 0, ll = table.data.length; ii < ll; ii++ ){
 			
-			var tr = document.createElement('tr');
+			var
+				tr = document.createElement('tr');
 				tr.setAttribute('data-index', ii);
 
 			for(var xx = 0; xx < table.headers.length; xx++ ){

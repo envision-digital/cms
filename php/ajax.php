@@ -1,6 +1,7 @@
 <?php
 
 $data = [
+	"title" => "ajax table",
 	"headings" => [
 		'id',
 		'name',
