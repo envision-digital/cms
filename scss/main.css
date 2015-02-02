@@ -282,10 +282,11 @@ main {
   top: 0px; }
 
 .metro-panel {
-  max-width: 800px;
-  width: 100%;
+  width: 800px;
+  height: 600px;
   margin: auto;
-  perspective: 600px; }
+  perspective: 600px;
+  position: relative; }
 
 .metro-wrapper {
   transform-origin: 50%;
@@ -293,75 +294,65 @@ main {
   width: 100%;
   height: 100%;
   margin: auto;
-  background: blue; }
+  position: relative; }
 
 .metro {
   display: block;
-  float: left;
-  height: 200px;
-  position: relative;
-  transform-origin: 50%; }
+  transform-origin: 50%;
+  overflow: hidden;
+  padding: 1em; }
   .metro .back, .metro .front {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden; }
-  .metro .back {
-    background: red; }
-  .metro .front {
-    background: green; }
+  .metro h1 {
+    font-size: 1em;
+    display: block;
+    width: 100%; }
+  .metro li {
+    opacity: 0;
+    position: relative;
+    top: -50px;
+    margin-top: 1em; }
 
 #metro1 {
-  float: left;
+  position: absolute;
+  width: 66%;
+  height: 66%;
+  left: 0;
+  top: 0;
   background: #aaa;
   height: 400px; }
-  @media screen and (min-width: 34.28571rem) {
-    #metro1 {
-      width: 66.66667%;
-      padding: 0%;
-      float: left;
-      margin-right: 0%;
-      margin-bottom: 0%; }
-      .msie #metro1 {
-        width: 66.36667%; }
-      #metro1:last-child {
-        margin-right: 0; } }
 
-#metro2,
+#metro2 {
+  position: absolute;
+  width: 33%;
+  height: 33%;
+  left: 66%;
+  top: 0;
+  background: #aaa; }
+
 #metro3 {
-  float: left; }
-  @media screen and (min-width: 34.28571rem) {
-    #metro2,
-    #metro3 {
-      width: 33.33333%;
-      padding: 0%;
-      float: left;
-      margin-right: 0%;
-      margin-bottom: 0%; }
-      .msie #metro2, .msie
-      #metro3 {
-        width: 33.03333%; }
-      #metro2:last-child,
-      #metro3:last-child {
-        margin-right: 0; } }
+  position: absolute;
+  width: 33%;
+  height: 33%;
+  left: 66%;
+  top: 33%; }
 
-#metro4,
+#metro4 {
+  position: absolute;
+  width: 50%;
+  height: 33%;
+  left: 0;
+  top: 66%; }
+
 #metro5 {
-  float: left; }
-  @media screen and (min-width: 34.28571rem) {
-    #metro4,
-    #metro5 {
-      width: 50%;
-      padding: 0%;
-      float: left;
-      margin-right: 0%;
-      margin-bottom: 0%; }
-      .msie #metro4, .msie
-      #metro5 {
-        width: 49.7%; }
-      #metro4:last-child,
-      #metro5:last-child {
-        margin-right: 0; } }
+  position: absolute;
+  width: 50%;
+  height: 33%;
+  left: 50%;
+  top: 66%; }
 
 #metro2 {
   background: #b7b7b7; }

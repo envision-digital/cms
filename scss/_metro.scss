@@ -2,14 +2,23 @@
 	transform-origin: $perspective;
 }
 
+@mixin abspos( $left, $top, $width, $height ){
+	position: absolute;
+	left: $left;
+	top: $top;
+	width: $width;
+	height: $height;
+}
+
 .metro-panel {
 	@extend .clear;
-	max-width: 800px;
-	width: 100%;
+	width: 800px;
+	height: 600px;
 	margin: auto;
 	// background: red;
 	perspective: 600px; //
 	// transform-origin: 50%;
+	position: relative;
 }
 
 .metro-wrapper {
@@ -19,15 +28,15 @@
 	width: 100%;
 	height: 100%;
 	margin: auto;
-	background: blue;
+	// background: blue;
+	position: relative;
 }
 
 .metro {
 	display: block;
-	float: left;
-	height: 200px;
-	position: relative;
 	transform-origin: 50%;
+	overflow: hidden;
+	padding: 1em;
 
 	.back, .front {
 		position: absolute;
@@ -37,45 +46,79 @@
 	}
 
 	.back {
-		background: red;
+		//background: red;
 	}
 
 	.front {
-		background: green;
+		//background: green;
+	}
+
+	h1 {
+		font-size: 1em;
+		display: block;
+		width: 100%;
+	}
+
+	li {
+		opacity: 0;
+		position: relative;
+		top: -50px;
+		margin-top: 1em;
 	}
 }
 
 #metro1{
-	@include en-col((
-		screen: 'hand',
-		cols: 3,
-		span: 2,
-		margin: 0
-	));
+	position: absolute;
+	width: 66%;
+	height: 66%;
+
+	left: 0;
+	top: 0;
 
 	background: #aaa;
 	height: 400px;
 }
 
-#metro2,
-#metro3,{
+#metro2 {
+	position: absolute;
+	width: 33%;
+	height: 33%;
 
-	@include en-col((
-		screen: 'hand',
-		cols: 3,
-		span: 1,
-		margin: 0
-	));
+	left: 66%;
+	top: 0;
+
+	background: #aaa;
 }
 
-#metro4,
+#metro3{
+	
+	position: absolute;
+	width: 33%;
+	height: 33%;
+
+	left: 66%;
+	top: 33%;
+
+}
+
+#metro4 {
+
+	position: absolute;
+	width: 50%;
+	height: 33%;
+
+	left: 0;
+	top: 66%;
+}
+
+
 #metro5 {
-	@include en-col((
-		screen: 'hand',
-		cols: 2,
-		span: 1,
-		margin: 0
-	));
+	position: absolute;
+	width: 50%;
+	height: 33%;
+
+	left: 50%;
+	top: 66%;
 }
 
 #metro2 { background: lighten( #aaa, 5% ); }
