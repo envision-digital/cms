@@ -8,7 +8,10 @@ define([
 		sidebarLinks,
 		sidebarItems,
 		contentWrapper,
-		menuout;
+		menuout,
+		nav,
+		menus = {},
+		navTabs;
 
 	function init(){
 
@@ -18,6 +21,11 @@ define([
 		sidebarItems    = $('.sidebar__menu-item');
 		contentWrapper  = $('.content-wrapper');
 		menuout         = false;
+		navTabs 		= $('.nav-tab');
+
+		getMenus();
+
+		console.log( menus );
 
 
 		sidebar.on('mouseover', overHandler);
@@ -25,16 +33,46 @@ define([
 
 		sidebarLinks.each(function(i){
 
-			$(this).hover(function(){
-				TweenLite.to( this, 0.5, {
-					borderWidth: "5px"
-				});
+			var $this = $(this);
+			
+			$this.click(function( e ){
+
+				e.preventDefault();
+
+				var hrefEl = $(this).attr('href'),
+					tl 		= new TimelineLite()
+
+				console.log( 'hrefEl', hrefEl);
+
+				tl.add('nav-in')
+					.to( navTabs, 0.5, {
+						opacity: 0
+					})
+					.set( navTabs, {
+						display: 'none'
+					})
+					.to( $(hrefEl), 0.5, {
+						display: 'block',
+						opacity : 1
+					});
+
+				return false;
 			})
 
 		});
 	}
 
 
+	function getMenus(){
+
+		nav = $('nav-menu');
+
+		var m = nav.find('nav-tab');
+
+		m.each(function( ii ){
+			menus[ this.id ] = $(this);
+		});
+	}
 
 	function overHandler( e ){
 

@@ -402,4 +402,11 @@ table.data-table {
     box-shadow: 0 0 7px #555 inset;
     outline: none; }
 
+.nav-tab {
+  display: none;
+  position: relative; }
+
+.nav-tab:nth-child(1) {
+  display: block; }
+
 /*# sourceMappingURL=main.css.map */

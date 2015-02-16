@@ -11,24 +11,50 @@
     <aside class="sidebar">
         <nav role="navigation">
             <ul class="sidebar__links">
-                <li class="sidebar__link"><a href="#" class="fa fa-home"><span class="hide-min">Dashboard</span></a></li>
-                <li class="sidebar__link"><a href="#" class="fa fa-tasks"><span class="hide-min">projects</span></a></li>
-                <li class="sidebar__link"><a href="#" class="fa fa-list-ul"><span class="hide-min">Tickets</span></a></li>
-                <li class="sidebar__link"><a href="#" class="fa fa-group"><span class="hide-min">Clients</span></a></li>
-                <li class="sidebar__link"><a href="#" class="fa fa-question-circle"><span class="hide-min">Support</span></a></li>
-                <li class="sidebar__link"><a href="#" class="fa fa-cog"><span class="hide-min">Help</span></a></li>
+                <li class="sidebar__link"><a href="#nav-home" class="fa fa-home" role='navigation'><span class="hide-min">Dashboard</span></a></li>
+                <li class="sidebar__link"><a href="#nav-tasks" class="fa fa-tasks"><span class="hide-min">projects</span></a></li>
+                <li class="sidebar__link"><a href="#nav-tickets" class="fa fa-list-ul"><span class="hide-min">Tickets</span></a></li>
+                <li class="sidebar__link"><a href="#nav-clients" class="fa fa-group"><span class="hide-min">Clients</span></a></li>
+                <li class="sidebar__link"><a href="#nav-support" class="fa fa-question-circle"><span class="hide-min">Support</span></a></li>
+                <li class="sidebar__link"><a href="#nav-help" class="fa fa-cog"><span class="hide-min">Help</span></a></li>
             </ul>
         </nav>
     </aside>
-    <nav class="sidebar__menu" role="navigation">
-        <div class="sidebar__menu-header"><h2>Something</h2></div>
-        <ul class="sidebar__menu-items">
-            <li class="sidebar__menu-item"><a href="#one">Something</a></li>
-            <li class="sidebar__menu-item"><a href="#two">Something Else</a></li>
-            <li class="sidebar__menu-item"><a href="#three">Something Else</a></li>
-            <li class="sidebar__menu-item"><a href="#four">Something Else</a></li>
-            <li class="sidebar__menu-item"><a href="#five">Something Else</a></li>
-        </ul>
+    <nav class="sidebar__menu" id="sidebar__menu" role="navigation">
+
+        <div id="nav-home" class="nav-tab">
+            <div class="sidebar__menu-header"><h2>Home</h2></div>
+            <ul class="sidebar__menu-items">
+                <li class="sidebar__menu-item"><a href="#one">Tasks</a></li>
+                <li class="sidebar__menu-item"><a href="#two">Contact</a></li>
+                <li class="sidebar__menu-item"><a href="#three">Blog</a></li>
+                <li class="sidebar__menu-item"><a href="#four">Changelog</a></li>
+                <li class="sidebar__menu-item"><a href="#five">News</a></li>
+            </ul>
+        </div>
+
+        <div id="nav-tasks" class="nav-tab">
+            <div class="sidebar__menu-header"><h2>Tasks</h2></div>
+            <ul class="sidebar__menu-items">
+                <li class="sidebar__menu-item"><a href="#one">My Tasks</a></li>
+                <li class="sidebar__menu-item"><a href="#two">New</a></li>
+                <li class="sidebar__menu-item"><a href="#three">Open</a></li>
+                <li class="sidebar__menu-item"><a href="#four">Pending</a></li>
+                <li class="sidebar__menu-item"><a href="#five">Resolved</a></li>
+            </ul>
+        </div>
+
+        <div id="nav-tasks" class="nav-tab">
+            <div class="sidebar__menu-header"><h2>Projects</h2></div>
+            <ul class="sidebar__menu-items">
+                <li class="sidebar__menu-item"><a href="#one">My Projects</a></li>
+                <li class="sidebar__menu-item"><a href="#two">New</a></li>
+                <li class="sidebar__menu-item"><a href="#three">Open</a></li>
+                <li class="sidebar__menu-item"><a href="#four">Pending</a></li>
+                <li class="sidebar__menu-item"><a href="#five">Resolved</a></li>
+            </ul>
+        </div>
+        
     </nav>
     <section class="content-wrapper">
         <header>
@@ -143,6 +169,11 @@
                 </section>
 
 
+                <form class="pager" onsubmit="return false;">
+                    <select name="pager-select" class="pager-select"></select>
+                </form>
+
+                
 
 
             </div> <!-- end content -->
@@ -166,8 +197,9 @@
                 "js/app/metro",
                 "js/app/sidebar",
                 'table',
-                'js/plugins/metro'
-            ], function( $, TweenLite, TimelineLite, CSSPlugin, EasePack, tabs, metro, sidebar, table, metroPlug ){
+                'js/plugins/metro',
+                'pager'
+            ], function( $, TweenLite, TimelineLite, CSSPlugin, EasePack, tabs, metro, sidebar, table, metroPlug, pager ){
 
                 $(function(){
 
@@ -191,6 +223,8 @@
                             width: '100px'
                         })
                     });
+
+                    $('.pager').pager( 6, 2000, 20 );
 
 
                 });

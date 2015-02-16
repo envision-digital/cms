@@ -9,10 +9,12 @@ requirejs.config({
 		"TimelineLite": "./bower_components/greensock/src/uncompressed/TimelineLite",
 		"TimelineMax": 	"./bower_components/greensock/src/uncompressed/TimelineMax",
 		"EasePack": 	"./bower_components/greensock/src/uncompressed/easing/EasePack",
-		"table": 		"./js/plugins/table"
+		"table": 		"./js/plugins/table",
+		"pager": 		"./js/plugins/pager"
 	},
 	shim: {
-	    'table': [ 'jquery' ]
+	    'table': [ 'jquery' ],
+	    'pager': [ 'jquery' ]
 	},
 	"urlArgs": "v=" + new Date().getTime()
 });
